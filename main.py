@@ -6,6 +6,7 @@ import os
 import sqlite3
 from datetime import datetime
 from itertools import chain
+from shutil import copyfile
 
 import aiohttp
 import imageio
@@ -39,7 +40,7 @@ def is_enough_for_gif():
             files.remove(to_delete)
         elif len(files) < 4:
             flag = False
-    os.rename(files[-1], "current_weather.png")
+    copyfile(files[-1], "current_weather.png")
 
 
 async def get_new_img():
