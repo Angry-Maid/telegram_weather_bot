@@ -32,13 +32,14 @@ def is_enough_for_gif():
             for file in files[:-1]:
                 os.remove(file)
                 flag = False
-            loop.run_until_complete(send_to_subs())
+            loop.create_task(send_to_subs())
         elif len(files) >= 4:
             to_delete = min(files, key=os.path.getctime)
             os.remove(to_delete)
             files.remove(to_delete)
         elif len(files) < 4:
             flag = False
+    os.rename(files[-1], "current_weather.png")
 
 
 async def get_new_img():
