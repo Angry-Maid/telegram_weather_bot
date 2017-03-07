@@ -30,7 +30,8 @@ def is_enough_for_gif():
     while flag:
         if len(files) == 4:
             imageio.mimsave("img.gif", list(map(imageio.imread, files)), duration=1)
-            for file in files[:-1]:
+            copyfile(files[-1], "current_weather.png")
+            for file in files:
                 os.remove(file)
                 flag = False
             loop.create_task(send_to_subs())
@@ -40,7 +41,6 @@ def is_enough_for_gif():
             files.remove(to_delete)
         elif len(files) < 4:
             flag = False
-    copyfile(files[-1], "current_weather.png")
 
 
 async def get_new_img():
