@@ -72,9 +72,7 @@ async def handle(msg):
                 with open("img.gif", "rb") as gif_content:
                     await bot.sendDocument(chat_id, document=gif_content)
         elif command == "/current":
-            files = glob.glob("*.png")
-            file = max(files, key=os.path.getctime)
-            with open(file, "rb") as png_content:
+            with open("current_weather.png", "rb") as png_content:
                 await bot.sendPhoto(chat_id, photo=png_content)
         elif command == "/sub":
             if [] is subs_curr.execute("SELECT * FROM subscribers WHERE id=?", (chat_id, )).fetchall():
