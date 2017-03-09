@@ -34,7 +34,7 @@ def is_enough_for_gif():
             imageio.mimsave("img.gif", list(map(imageio.imread, files)), duration=1)
             for file in files:
                 os.remove(file)
-                flag = False
+            flag = False
             loop.create_task(send_to_subs())
         elif len(files) >= 4:
             to_delete = min(files, key=os.path.getctime)
