@@ -19,8 +19,15 @@ import config
 subs_db = sqlite3.connect("subscribers.db")
 subs_curr = subs_db.cursor()
 subscribers = list(chain.from_iterable(subs_curr.execute("SELECT * FROM subscribers")))
+print(subscribers)
 bot = telepot.aio.Bot(config.bot_token)
 loop = asyncio.get_event_loop()
+
+
+async def send_to_subs():
+    with open("img.gif", "rb") as gif_content:
+        for sub in subscribers:
+            await bot.sendDocument(sub, document=gif_content)
 
 
 # rewrite for async/await ?
@@ -54,17 +61,11 @@ async def get_new_img():
         await asyncio.sleep(60 * 15)
 
 
-async def send_to_subs():
-    with open("img.gif", "rb") as gif_content:
-        for sub in subscribers:
-            await bot.sendDocument(sub, document=gif_content)
-
-
 async def handle(msg):
     content_type, chat_type, chat_id = telepot.glance(msg)
     command = msg['text']
     print(datetime.now().strftime("%d-%m-%Y %H:%M:%S"))
-    print("Chat message:", content_type, chat_type, str(chat_id))
+    print("Chat message:", content_type, chat_type, chat_id)
     print("Command:", command)
 
     if chat_type == "private" and content_type == "text":
